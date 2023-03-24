@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  selectedCurrency: string = 'INR';
+  selectedCurrency: string = 'ENR';
 
   constructor(private CurrencyService: CurrencyService){}
 
