@@ -18,13 +18,17 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { NgChartsModule } from 'ng2-charts';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CoinListComponent,
-    CoinDetailComponent
+    CoinDetailComponent,
+    ToolbarComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

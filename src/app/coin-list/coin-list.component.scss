@@ -78,9 +78,11 @@ th {
     width: 25%;
 }
 
+td{
+    cursor: pointer;
+   }
 
 
 .mdc-data-table__header-row  {
-    background-color: #009688;
-    
+    background-color: #009688; 
 }

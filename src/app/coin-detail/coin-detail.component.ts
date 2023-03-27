@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../service/api.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { currencyByIdDataType } from '../types/currencyByIdData.types';
 
 @Component({
   selector: 'app-coin-detail',
@@ -16,6 +17,7 @@ export class CoinDetailComponent implements OnInit{
   coinID!: number;
   days: number = 1;
   currency: string = "INR";
+  graphIsLoading: boolean = false;
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -64,9 +66,9 @@ export class CoinDetailComponent implements OnInit{
     })
   };
 
-  getCoinData(){
-    this.apiService.getCurrencyById(this.coinID).subscribe( res=> {
-      console.log(this.coinData);
+  getCoinData(): void{
+    this.apiService.getCurrencyById(this.coinID).subscribe( (res: currencyByIdDataType)=> {
+      console.log('this.apiService.getCurrencyById', res);
       if(this.currency === "USD"){
         res.market_data.current_price.inr = res.market_data.current_price.usd;
         res.market_data.market_cap.inr = res.market_data.market_cap.usd;
@@ -77,12 +79,14 @@ export class CoinDetailComponent implements OnInit{
     })
   };
 
-  getGraphData(days: number){
+  getGraphData(days: number): void{
+    this.graphIsLoading = true;
     this.days = days;
     this.apiService.getGrpahicalCurrencyData(this.coinID, this.currency, this.days).subscribe(res => {
       setTimeout(()=> {
         this.myLineChart.chart?.update();
       }, 200)
+      this.graphIsLoading = false;
       this.lineChartData.datasets[0].data = res.prices.map((a: any) =>{
         return a[1]
       });

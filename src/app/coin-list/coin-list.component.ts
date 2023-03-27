@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
+import { currencyDataArrayType } from '../types/currencyDataArray.types';
 
 @Component({
   selector: 'app-coin-list',
@@ -17,7 +18,7 @@ export class CoinListComponent {
 
   constructor(private api: ApiService, private router: Router, private currencyService: CurrencyService){}
 
-  bannerData: any = [];
+  bannerData: currencyDataArrayType[] = [];
   currency: string = "INR";
   dataSource!: MatTableDataSource<any>;
   displayedColumns: string[] = ['symbol', 'current_price', 'price_change_percentage_24h', 'market_cap'] // from api result
@@ -36,7 +37,9 @@ export class CoinListComponent {
   }
 
   getBannerData(){
-    this.api.getTrendingCurrency(this.currency).subscribe( res=> this.bannerData = res)
+    this.api.getTrendingCurrency(this.currency).subscribe( (res: currencyDataArrayType[] )=> {
+      this.bannerData = res;
+    })
   }
 
   getAllData(){
